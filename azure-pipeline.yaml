@@ -49,7 +49,7 @@ stages:
     workingDirectory: $(tfworkingDirectory)
     dependsOn: ['${{ variables.tfBackendEnvironment}}']
 
-template: template-terraform-stages.yaml
+- template: template-terraform-stages.yaml
   parameters:
     environment: ${{ variables.prodEnvironment}}
     environmentDisplayName: PRODUCTION
