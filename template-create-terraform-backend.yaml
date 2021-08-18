@@ -27,7 +27,7 @@ stages:
         azureSubscription: ${{ parameters.backendServiceArm }}
         scriptType: 'bash'
         scriptLocation: 'inlineScript'
-        inlineScript:
+        inlineScript: |
           # Create the resource Group
           az group create \
              -n ${{ parameters.backendAzureRmResourceGroup }} \
