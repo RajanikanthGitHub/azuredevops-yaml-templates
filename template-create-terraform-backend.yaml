@@ -9,47 +9,47 @@ parameters:
   location: 'eastus'
   dependsOn: []
 
-  stages:
-  - stage: ${{ parameters.environment }}
-    displayName: ${{ parameters.environmentDisplayName }}
-    dependsOn: []
-    Jobs:
-    - job: Create_TF_Backend
-        displayName: TF Backend to Save State
-        pool: 
-          vmImage: ubuntu-latest
+stages:
+- stage: ${{ parameters.environment }}
+  displayName: ${{ parameters.environmentDisplayName }}
+  dependsOn: []
+  Jobs:
+  - job: Create_TF_Backend
+    displayName: TF Backend to Save State
+    pool: 
+      vmImage: ubuntu-latest
         
-        steps:
-        - task: AzureCLI@2
-          displayName: Create Storage Container for tfState
-          inputs:
-            azureSubscription: ${{ parameters.backendServiceArm }}
-            scriptType: 'bash'
-            scriptLocation: 'inlineScript'
-            inlineScript:
-              # Create the resource Group
-              az group create \
-                -n ${{ parameters.backendAzureRmResourceGroup }} \
-                -l ${{ parameters.location }}
-              echo " Resource Group ${{ parameters.backendAzureRMResourceGroup }} Created...."
+    steps:
+    - task: AzureCLI@2
+      displayName: Create Storage Container for tfState
+      inputs:
+        azureSubscription: ${{ parameters.backendServiceArm }}
+        scriptType: 'bash'
+        scriptLocation: 'inlineScript'
+        inlineScript:
+          # Create the resource Group
+          az group create \
+            -n ${{ parameters.backendAzureRmResourceGroup }} \
+            -l ${{ parameters.location }}
+            echo " Resource Group ${{ parameters.backendAzureRMResourceGroup }} Created...."
 
-              # Create the storage account
-              az storage account create \
-              -g ${{ parameters.backendAzureRmResourceGroup }} \
-              -l ${{ parameters.location }} \
-              --name $${{ parameters.backendAzureRmStorageAccountName }} \
-              --sku Standard_LRS \
-              --encryption_service blob
+          # Create the storage account
+          az storage account create \
+            -g ${{ parameters.backendAzureRmResourceGroup }} \
+            -l ${{ parameters.location }} \
+            --name $${{ parameters.backendAzureRmStorageAccountName }} \
+            --sku Standard_LRS \
+            --encryption_service blob
 
-              echo " Storage Account ${{ parameters.backendAzureRmStorageAccountName }} Created...."
+            echo " Storage Account ${{ parameters.backendAzureRmStorageAccountName }} Created...."
 
-              # Retrieve the storage account key
-              ACCOUNT_KEY=$(az storage account keys list --resource-group ${{ parameters.backendAzureRmResourceGroupName }} --account-name ${{ parameters.backendAzureRmStorageAccountName }} --query [0].value -o tsv)
+            # Retrieve the storage account key
+            ACCOUNT_KEY=$(az storage account keys list --resource-group ${{ parameters.backendAzureRmResourceGroupName }} --account-name ${{ parameters.backendAzureRmStorageAccountName }} --query [0].value -o tsv)
            
-              echo "Storage account key retrieved."
+            echo "Storage account key retrieved."
            
-              # Create a storage container (for the Terraform State)
-              az storage container create \
+            # Create a storage container (for the Terraform State)
+            az storage container create \
               --name ${{ parameters.backendAzureRmContainerName }} \
               --account-name ${{ parameters.backendAzureRmStorageAccountName }} \
               --account-key $ACCOUNT_KEY
