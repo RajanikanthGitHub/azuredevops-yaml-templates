@@ -25,7 +25,7 @@ stages:
     location: ${{ variables.location }}
     dependsOn: []
 
-- tempate: template-terraform-stages.yaml
+- template: template-terraform-stages.yaml
   parameters:
     environment: ${{ variables.devEnvironment}}
     environmentDisplayName: DEV
@@ -45,7 +45,7 @@ stages:
     backendAzureRmResourceGroupName: ${{ variables.backendAzureRmResourceGroupName }}
     backendAzureRmStorageAccountName: ${{ variables.backendAzureRmStorageAccountName }}
     backendAzureRmContainerName: ${{ variables.backendAzureRmContainerName }}
-    backendAzureRmKey: $(devEnvironment).tfstate
+    backendAzureRmKey: $(testEnvironment).tfstate
     workingDirectory: $(tfworkingDirectory)
     dependsOn: ['${{ variables.tfBackendEnvironment}}']
 
@@ -57,6 +57,6 @@ template: template-terraform-stages.yaml
     backendAzureRmResourceGroupName: ${{ variables.backendAzureRmResourceGroupName }}
     backendAzureRmStorageAccountName: ${{ variables.backendAzureRmStorageAccountName }}
     backendAzureRmContainerName: ${{ variables.backendAzureRmContainerName }}
-    backendAzureRmKey: $(devEnvironment).tfstate
+    backendAzureRmKey: $(prodEnvironment).tfstate
     workingDirectory: $(tfworkingDirectory)
-    dependsOn: ['${{ variables.tfBackendEnvironment}}']
+    dependsOn: ['${{ variables.tfBackendEnvironment }}', '${{ variables.devEnvironment }}', '${{ variables.testEnvironment }}']
