@@ -3,7 +3,7 @@ parameters:
   environment: dev
   environmentDisplayName: Development
   backendServiceArm: ''
-  backendAzureRmResourceGroupName: 'tf-azdo-demo-rsg'
+  backendAzureRmResourceGroupName: 'tf-azdo-demo-rsg-001'
   backendAzureRmStorageAccountName: 'tfazdodemostgrk001'
   backendAzureRmContainerName: 'terraform-state-001'
   backendAzureRmKey: 'dev.tfstate'
