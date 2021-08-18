@@ -2,7 +2,7 @@ trigger:
 - master
 
 variables:
-  backendServiceArm: 'PSL011124_Rackspace-NHS_PB_0015077(e5c53a81-f5c9-4864-b65a-d6fc347b4e2d)'
+  backendServiceArm: 'NewServiceConnection'
   backendAzureRmResourceGroup: 'tf-azdo-demo-rsg'
   backendAzureRmStorageAccountName: 'tfazdodemostgrk001'
   backendAzureRmContainerName: 'terraform-state'
