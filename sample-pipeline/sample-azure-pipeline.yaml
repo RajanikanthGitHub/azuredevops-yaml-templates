@@ -1,0 +1,10 @@
+trigger:
+- master
+
+steps:
+
+- template: sample-template-step.yaml
+
+- template: sample-template-step.yaml
+
+- template: sample-template-step.yaml
