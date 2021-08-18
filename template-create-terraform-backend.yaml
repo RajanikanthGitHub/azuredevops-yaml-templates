@@ -3,7 +3,7 @@ parameters:
   environment: terraform_backend_tfstate
   environmentDisplayName: Terraform Backend
   backendServiceArm: ''
-  backendAzureRMResourceGroup: 'tf-azdo-demo-rsg001'
+  backendAzureRMResourceGroup: 'tf-azdo-demo-rsg'
   backendAzureRMStorageAccount: 'tfazdodemostgrk001-101'
   backendAzureRMContainerName: 'terraform-state-001'
   location: 'eastus'
