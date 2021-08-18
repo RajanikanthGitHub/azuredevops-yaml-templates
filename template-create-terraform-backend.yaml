@@ -29,9 +29,9 @@ stages:
         inlineScript:
           # Create the resource Group
           az group create \
-            -n ${{ parameters.backendAzureRmResourceGroup }} \
-            -l ${{ parameters.location }}
-            echo " Resource Group ${{ parameters.backendAzureRMResourceGroup }} Created...."
+             -n ${{ parameters.backendAzureRmResourceGroup }} \
+             -l ${{ parameters.location }}
+          echo " Resource Group ${{ parameters.backendAzureRMResourceGroup }} Created...."
 
           # Create the storage account
           az storage account create \
@@ -41,17 +41,17 @@ stages:
             --sku Standard_LRS \
             --encryption_service blob
 
-            echo " Storage Account ${{ parameters.backendAzureRmStorageAccountName }} Created...."
+          echo " Storage Account ${{ parameters.backendAzureRmStorageAccountName }} Created...."
 
-            # Retrieve the storage account key
-            ACCOUNT_KEY=$(az storage account keys list --resource-group ${{ parameters.backendAzureRmResourceGroupName }} --account-name ${{ parameters.backendAzureRmStorageAccountName }} --query [0].value -o tsv)
+          # Retrieve the storage account key
+          ACCOUNT_KEY=$(az storage account keys list --resource-group ${{ parameters.backendAzureRmResourceGroupName }} --account-name ${{ parameters.backendAzureRmStorageAccountName }} --query [0].value -o tsv)
            
-            echo "Storage account key retrieved."
+          echo "Storage account key retrieved."
            
-            # Create a storage container (for the Terraform State)
-            az storage container create \
-              --name ${{ parameters.backendAzureRmContainerName }} \
-              --account-name ${{ parameters.backendAzureRmStorageAccountName }} \
-              --account-key $ACCOUNT_KEY
+          # Create a storage container (for the Terraform State)
+          az storage container create \
+             --name ${{ parameters.backendAzureRmContainerName }} \
+             --account-name ${{ parameters.backendAzureRmStorageAccountName }} \
+             --account-key $ACCOUNT_KEY
            
-              echo "Storage container ${{ parameters.backendAzureRmContainerName }} created."
+          echo "Storage container ${{ parameters.backendAzureRmContainerName }} created."
