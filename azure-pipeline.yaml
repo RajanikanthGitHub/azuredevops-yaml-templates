@@ -1,0 +1,13 @@
+trigger:
+- master
+
+variables:
+  backendServiceArm: 
+
+
+stages:
+- template: template-create-terraform-backend.yaml
+
+- tempate: template-terraform-stages.yaml
+
+- template: template-terraform-stages.yaml
